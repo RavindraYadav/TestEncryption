@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<testProject selectedBrowserProviderDeviceName="Full Screen" selectedBrowserProviderName="Desktop">
+<testProject selectedBrowserProviderDeviceName="Full Screen" selectedBrowserProviderName="Desktop" selectedEnvironment="Test">
   <title>/Demo/.testproject</title>
   <configPath>config</configPath>
   <testsPath>tests</testsPath>
@@ -7,12 +7,19 @@
   <sourcePath>src</sourcePath>
   <secureStoragePath>.secrets</secureStoragePath>
   <browserDebugPort>0</browserDebugPort>
+  <environments>
+    <environment name="Test" secretsEncryption="JASYPT">
+      <summary/>
+    </environment>
+  </environments>
   <connectionClasses>
     <connectionClass name="sf">
       <connections>
         <connection name="admin">
+          <summary/>
           <connectionUrls>
             <connectionUrl secureStorageNodeId="cb803ca9-854b-45db-b1e9-e91e90a478aa" url="sf:user=admin1@test1.provar.com;password={password};environment=PROD_DEV"/>
+            <connectionUrl envName="Test" secureStorageNodeId="454ab223-834f-4e97-8267-85b7602955c6" url="sf:user=df13@makepositive.com;password={password};environment=PROD_DEV"/>
           </connectionUrls>
         </connection>
       </connections>
