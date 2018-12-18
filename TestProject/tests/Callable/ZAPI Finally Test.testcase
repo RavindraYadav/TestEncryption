@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<testCase id="18" registryId="5e831ed5-c4ed-4eac-a055-ee23e0d1e655" visibility="Internal">
+  <summary/>
+  <steps>
+    <caseCall testCaseId="3adfddec-16b9-4f79-a7f5-97d477bfb65c" testCasePath="tests/Callable/Get TC ID.testcase" testItemId="8">
+      <arguments>
+        <argument id="TC_Name">
+          <value class="variable">
+            <path element="TestCaseName"/>
+          </value>
+        </argument>
+      </arguments>
+      <outputArguments>
+        <outputArgument id="Id">
+          <name class="value" valueClass="string">Id</name>
+        </outputArgument>
+      </outputArguments>
+    </caseCall>
+    <apiCall apiId="com.provar.plugins.bundled.apis.control.StepGroup" name="StepGroup" testItemId="9" title="Read ZAPI data">
+      <arguments>
+        <argument id="description">
+          <value class="value" valueClass="string">Read ZAPI data</value>
+        </argument>
+      </arguments>
+      <parameterValueSources>
+        <parameterValueSource variableName="ExcelData" variableScope="Test">
+          <cacheToken>/Users/ravindrayadav/Documents/WorkSpaces/Demo/TestProject/templates/ZephyrData.xlsx;1516264716000</cacheToken>
+          <cachedParameters>
+            <apiParam name="VesionId"/>
+            <apiParam name="ProjectId"/>
+            <apiParam name="CycleId"/>
+          </cachedParameters>
+          <sourceValue class="excelTarget" namesLocation="FirstRowOfRange" whereComparison="EqualTo">
+            <workbookPath class="value" valueClass="string">templates/ZephyrData.xlsx</workbookPath>
+            <worksheetName class="value" valueClass="string">Sheet1</worksheetName>
+            <valuesRange class="value"/>
+          </sourceValue>
+        </parameterValueSource>
+      </parameterValueSources>
+      <clauses>
+        <clause name="hidden" testItemId="7"/>
+      </clauses>
+    </apiCall>
+    <caseCall testCaseId="cfde6494-3f9b-4d37-b0a8-bb0d6ac7f349" testCasePath="tests/ZAPI/Get the Execution List By Cycle Id.testcase" testItemId="10">
+      <arguments>
+        <argument id="CycleId">
+          <value class="variable">
+            <path element="ExcelData"/>
+            <path element="CycleId"/>
+          </value>
+        </argument>
+        <argument id="VersionId">
+          <value class="variable">
+            <path element="ExcelData"/>
+            <path element="VersionId"/>
+          </value>
+        </argument>
+        <argument id="ProjectId">
+          <value class="variable">
+            <path element="ExcelData"/>
+            <path element="ProjectId"/>
+          </value>
+        </argument>
+        <argument id="TCId">
+          <value class="variable">
+            <path element="Id"/>
+          </value>
+        </argument>
+      </arguments>
+      <outputArguments>
+        <outputArgument id="GetExecutionList">
+          <name class="value" valueClass="string">GetExecutionList</name>
+        </outputArgument>
+        <outputArgument id="ExecutionId">
+          <name class="value" valueClass="string">ExecutionId</name>
+        </outputArgument>
+        <outputArgument id="IssueId">
+          <name class="value" valueClass="string">IssueId</name>
+        </outputArgument>
+      </outputArguments>
+    </caseCall>
+    <caseCall testCaseId="5d3c7b49-d614-4abe-9db1-dc7334529eaf" testCasePath="tests/ZAPI/Update Execution.testcase" testItemId="11">
+      <arguments>
+        <argument id="ExecutionId">
+          <value class="variable">
+            <path element="ExecutionId"/>
+          </value>
+        </argument>
+        <argument id="TestCaseStatus">
+          <value class="variable">
+            <path element="TestOutput"/>
+          </value>
+        </argument>
+        <argument id="issueId">
+          <value class="variable">
+            <path element="IssueId"/>
+          </value>
+        </argument>
+        <argument id="versionId">
+          <value class="variable">
+            <path element="ExcelData"/>
+            <path element="VersionId"/>
+          </value>
+        </argument>
+        <argument id="ProjectId">
+          <value class="variable">
+            <path element="ExcelData"/>
+            <path element="ProjectId"/>
+          </value>
+        </argument>
+        <argument id="cycleId">
+          <value class="variable">
+            <path element="ExcelData"/>
+            <path element="CycleId"/>
+          </value>
+        </argument>
+      </arguments>
+    </caseCall>
+  </steps>
+  <params>
+    <param name="TestCaseName" title="TestCase Name">
+      <summary/>
+      <type>
+        <textType>
+          <constraints>
+            <valueConstraint name="minLength">0</valueConstraint>
+            <valueConstraint name="maxLength">9999</valueConstraint>
+            <valueConstraint name="regex"/>
+          </constraints>
+        </textType>
+      </type>
+    </param>
+    <param name="TestOutput" title="Test Output">
+      <summary/>
+      <type>
+        <textType>
+          <constraints>
+            <valueConstraint name="minLength">0</valueConstraint>
+            <valueConstraint name="maxLength">9999</valueConstraint>
+            <valueConstraint name="regex"/>
+          </constraints>
+        </textType>
+      </type>
+    </param>
+  </params>
+  <args>
+    <argument id="TestOutput"/>
+    <argument id="TestCaseName"/>
+  </args>
+</testCase>

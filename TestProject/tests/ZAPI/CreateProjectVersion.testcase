@@ -1,0 +1,649 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<testCase id="0" registryId="f9f6f8e0-2b7c-4d85-8b20-c3b6278ec395" visibility="Internal">
+  <summary/>
+  <steps>
+    <apiCall apiId="com.provar.plugins.bundled.apis.control.StepGroup" name="StepGroup" testItemId="5" title="Read data to create version">
+      <arguments>
+        <argument id="description">
+          <value class="value" valueClass="string">Read data to create version</value>
+        </argument>
+      </arguments>
+      <parameterValueSources>
+        <parameterValueSource variableName="ExcelData" variableScope="Test">
+          <cacheToken>/Users/ravindrayadav/Documents/WorkSpaces/ZAPIOnly/TestProject/templates/CloneTestCyclesTestData.xlsx;1542104826000</cacheToken>
+          <cachedParameters>
+            <apiParam name="RowNumber"/>
+            <apiParam name="VersionName"/>
+            <apiParam name="Description"/>
+            <apiParam name="ProjectCode"/>
+          </cachedParameters>
+          <sourceValue class="excelTarget" namesLocation="FirstRowOfRange" whereComparison="EqualTo">
+            <workbookPath class="value" valueClass="string">templates/CloneTestCyclesTestData.xlsx</workbookPath>
+            <worksheetName class="value" valueClass="string">VersionData</worksheetName>
+            <valuesRange class="value" valueClass="string">A1:Z100</valuesRange>
+          </sourceValue>
+        </parameterValueSource>
+      </parameterValueSources>
+      <clauses>
+        <clause name="hidden" testItemId="6"/>
+      </clauses>
+    </apiCall>
+    <apiCall apiId="com.provar.plugins.forcedotcom.core.testapis.WebConnect" name="WebConnect" testItemId="1" title="Web Connect: WebServiceConnection">
+      <tags/>
+      <arguments>
+        <argument argId="0cb72466-2f4b-4d6c-b6e2-0948cd2a0ce7" id="connectionName">
+          <value class="value" valueClass="string">Jira</value>
+        </argument>
+        <argument id="resultName">
+          <value class="value" valueClass="string">WebServiceConnection</value>
+        </argument>
+        <argument id="resultScope">
+          <value class="value" valueClass="string">Test</value>
+        </argument>
+      </arguments>
+    </apiCall>
+    <apiCall apiId="com.provar.plugins.forcedotcom.core.testapis.RestRequest" name="RestRequest" testItemId="2" title="Web Request (HTTP/REST): ⇒GetVersionDetail">
+      <tags/>
+      <arguments>
+        <argument id="connectionName">
+          <value class="value" valueClass="string">WebServiceConnection</value>
+        </argument>
+        <argument id="targetValue">
+          <value class="restTarget" uri="rest:untyped?method=POST&amp;bodyStyle=JSON"/>
+        </argument>
+        <argument id="resultName">
+          <value class="value" valueClass="string">GetVersionDetail</value>
+        </argument>
+        <argument id="resultScope">
+          <value class="value" valueClass="string">Global</value>
+        </argument>
+        <argument id="statusResultName">
+          <value class="value" valueClass="string">RestResponseStatus</value>
+        </argument>
+        <argument id="restResourceUrl">
+          <value class="value" valueClass="string">/rest/api/2/version</value>
+        </argument>
+        <argument id="restRequestHeader"/>
+        <argument argId="43c28beb-f517-4050-9e62-fe0e560c1e25" id="restBody">
+          <value class="compound">
+            <parts>
+              <value valueClass="string">{     "description": "</value>
+              <variable>
+                <path element="ExcelData"/>
+                <path element="Description"/>
+              </variable>
+              <value valueClass="string">",\n      "name": "</value>
+              <variable>
+                <path element="ExcelData"/>
+                <path element="VersionName"/>
+              </variable>
+              <value valueClass="string">",\n      "archived": false,\n      "released": false,\n      "project": "</value>
+              <variable>
+                <path element="ExcelData"/>
+                <path element="ProjectCode"/>
+              </variable>
+              <value valueClass="string">"\n    }</value>
+            </parts>
+          </value>
+        </argument>
+        <argument id="restAttachments">
+          <value class="valueList" mutable="Mutable"/>
+        </argument>
+      </arguments>
+      <generatedParameters>
+        <apiParam group="request" internal="true" name="restResourceUrl" title="Resource URL">
+          <type>
+            <textType/>
+          </type>
+        </apiParam>
+        <apiParam group="header" internal="true" name="restRequestHeader" title="Request Header">
+          <type>
+            <textType/>
+          </type>
+        </apiParam>
+        <apiParam group="body" name="restBody" title="Body">
+          <type>
+            <textType>
+              <constraints>
+                <valueConstraint name="mimeType">application/json</valueConstraint>
+              </constraints>
+            </textType>
+          </type>
+        </apiParam>
+        <compoundApiParam group="attachments" list="true" name="restAttachments" title="Attachment">
+          <childParams>
+            <apiParam name="name" title="Attachment Name"/>
+            <apiParam name="fileName" title="File Name"/>
+            <apiParam name="contentType" title="Content Type">
+              <type>
+                <choiceType>
+                  <constraints>
+                    <valueConstraint name="valuesSource">com.provar.core.model.base.java.EnumChoiceListValuesSource</valueConstraint>
+                    <valueConstraint name="valuesSourceDependencies">com.provar.core.model.base.api.MimeContentType</valueConstraint>
+                  </constraints>
+                </choiceType>
+              </type>
+            </apiParam>
+            <apiParam name="data" title="Data">
+              <type>
+                <urlType/>
+              </type>
+            </apiParam>
+            <apiParam name="base64Encode" title="Encode As Base64">
+              <type>
+                <booleanType/>
+              </type>
+            </apiParam>
+          </childParams>
+        </compoundApiParam>
+      </generatedParameters>
+    </apiCall>
+    <apiCall apiId="com.provar.plugins.bundled.apis.control.SetValues" name="SetValues" testItemId="4" title="Set Values: v.ProjectId">
+      <arguments>
+        <argument id="values">
+          <value class="valueList" mutable="Mutable">
+            <namedValues mutable="Mutable">
+              <namedValue name="valuePath">
+                <value class="value" valueClass="string">v.VersionId</value>
+              </namedValue>
+              <namedValue name="value">
+                <value class="variable">
+                  <path element="GetVersionDetail"/>
+                  <path element="id"/>
+                </value>
+              </namedValue>
+              <namedValue name="valueScope">
+                <value class="value" valueClass="string">Test</value>
+              </namedValue>
+            </namedValues>
+            <namedValues mutable="Mutable">
+              <namedValue name="valuePath">
+                <value class="value" valueClass="string">v.ProjectId</value>
+              </namedValue>
+              <namedValue name="value">
+                <value class="variable">
+                  <path element="GetVersionDetail"/>
+                  <path element="projectId"/>
+                </value>
+              </namedValue>
+              <namedValue name="valueScope">
+                <value class="value" valueClass="string">Test</value>
+              </namedValue>
+            </namedValues>
+          </value>
+        </argument>
+      </arguments>
+    </apiCall>
+    <apiCall apiId="com.provar.plugins.bundled.apis.If" name="If" testItemId="8" title="If: {ExcelData.VersionName ~ &quot;.*Detail&quot;}">
+      <arguments>
+        <argument id="condition">
+          <value class="match">
+            <lhs class="variable">
+              <path element="ExcelData"/>
+              <path element="VersionName"/>
+            </lhs>
+            <rhs class="value" valueClass="string">.*Detail</rhs>
+          </value>
+        </argument>
+      </arguments>
+      <clauses>
+        <clause name="then" testItemId="9">
+          <steps>
+            <apiCall apiId="com.provar.plugins.bundled.apis.control.SetValues" name="SetValues" testItemId="10" title="Set Values: tt">
+              <arguments>
+                <argument id="values">
+                  <value class="valueList" mutable="Mutable">
+                    <namedValues mutable="Mutable">
+                      <namedValue name="valuePath">
+                        <value class="value" valueClass="string">tt</value>
+                      </namedValue>
+                      <namedValue name="value">
+                        <value class="variable">
+                          <path element="ExcelData"/>
+                          <path element="VersionName"/>
+                        </value>
+                      </namedValue>
+                      <namedValue name="valueScope">
+                        <value class="value" valueClass="string">Test</value>
+                      </namedValue>
+                    </namedValues>
+                  </value>
+                </argument>
+              </arguments>
+            </apiCall>
+            <apiCall apiId="com.provar.plugins.bundled.apis.io.Write" name="Write" testItemId="3" title="Write: {v}=&gt;templates/CloneTestCyclesTestData.xlsx">
+              <arguments>
+                <argument id="data">
+                  <value class="variable">
+                    <path element="v"/>
+                  </value>
+                </argument>
+                <argument id="dataUrl">
+                  <value class="excelTarget" debug="true" sheetWriteMode="Update">
+                    <workbookPath class="value" valueClass="string">templates/CloneTestCyclesTestData.xlsx</workbookPath>
+                    <worksheetName class="value" valueClass="string">DetailClone</worksheetName>
+                  </value>
+                </argument>
+                <argument id="targetDescription">
+                  <value class="value" valueClass="string">templates/CloneTestCyclesTestData.xlsx</value>
+                </argument>
+                <argument id="updateValueRange"/>
+                <argument id="updateColumnNames">
+                  <value class="value" valueClass="string">FirstRowOfRange</value>
+                </argument>
+                <argument id="updateMatchType">
+                  <value class="value" valueClass="string">Where</value>
+                </argument>
+                <argument id="updateMatchLocator">
+                  <value class="eq">
+                    <lhs class="variable">
+                      <path element="ProjectCode"/>
+                    </lhs>
+                    <rhs class="value" valueClass="string">PROT</rhs>
+                  </value>
+                </argument>
+              </arguments>
+              <generatedParameters>
+                <apiParam group="result" name="updateValueRange" title="Values Range">
+                  <summary>The range of cells that needs to updated. If nothing is specified entire sheet is targeted</summary>
+                  <type>
+                    <textType>
+                      <constraints>
+                        <valueConstraint name="disableTemplateEditor">true</valueConstraint>
+                      </constraints>
+                    </textType>
+                  </type>
+                </apiParam>
+                <apiParam group="result" name="updateColumnNames" title="Column Names">
+                  <summary>Identifies where the column names are in the spreadsheet:</summary>
+                  <defaultValue>FirstRowOfRange</defaultValue>
+                  <type>
+                    <choiceType>
+                      <constraints>
+                        <valueConstraint name="boundedValues">FirstRowOfRange:Across the first row|FirstColumnOfRange:Down the first column</valueConstraint>
+                      </constraints>
+                    </choiceType>
+                  </type>
+                </apiParam>
+                <apiParam group="result" internal="true" name="updateMatchType" title="">
+                  <summary/>
+                  <defaultValue>RowOrColNumber</defaultValue>
+                  <type>
+                    <choiceType>
+                      <constraints>
+                        <valueConstraint name="boundedValues">RowOrColNumber:Match by Position|Where:Match on Condition|MatchColumns:Match by Columns</valueConstraint>
+                      </constraints>
+                    </choiceType>
+                  </type>
+                </apiParam>
+                <apiParam group="result" manuallyResolved="true" name="updateMatchLocator" title="Match Locator">
+                  <summary>Identifies which rows in the Range will be updated. \n It can either be a row number (where the first row = 1) or a filtering condition against one or more columns (e.g. {firstName = "Joe" and surname = "Bloggs"}.</summary>
+                </apiParam>
+              </generatedParameters>
+            </apiCall>
+          </steps>
+        </clause>
+      </clauses>
+    </apiCall>
+    <apiCall apiId="com.provar.plugins.bundled.apis.If" name="If" testItemId="18" title="If: {ExcelData.VersionName ~ &quot;.*Smoke&quot;}">
+      <arguments>
+        <argument id="condition">
+          <value class="match">
+            <lhs class="variable">
+              <path element="ExcelData"/>
+              <path element="VersionName"/>
+            </lhs>
+            <rhs class="value" valueClass="string">.*Smoke</rhs>
+          </value>
+        </argument>
+      </arguments>
+      <clauses>
+        <clause name="then" testItemId="19">
+          <steps>
+            <apiCall apiId="com.provar.plugins.bundled.apis.control.SetValues" name="SetValues" testItemId="20" title="Set Values: tt">
+              <arguments>
+                <argument id="values">
+                  <value class="valueList" mutable="Mutable">
+                    <namedValues mutable="Mutable">
+                      <namedValue name="valuePath">
+                        <value class="value" valueClass="string">tt</value>
+                      </namedValue>
+                      <namedValue name="value">
+                        <value class="variable">
+                          <path element="ExcelData"/>
+                          <path element="VersionName"/>
+                        </value>
+                      </namedValue>
+                      <namedValue name="valueScope">
+                        <value class="value" valueClass="string">Test</value>
+                      </namedValue>
+                    </namedValues>
+                  </value>
+                </argument>
+              </arguments>
+            </apiCall>
+            <apiCall apiId="com.provar.plugins.bundled.apis.io.Write" name="Write" testItemId="21" title="Write: {v}=&gt;templates/CloneTestCyclesTestData.xlsx">
+              <arguments>
+                <argument id="data">
+                  <value class="variable">
+                    <path element="v"/>
+                  </value>
+                </argument>
+                <argument id="dataUrl">
+                  <value class="excelTarget" debug="true" sheetWriteMode="Update">
+                    <workbookPath class="value" valueClass="string">templates/CloneTestCyclesTestData.xlsx</workbookPath>
+                    <worksheetName class="value" valueClass="string">CloneCycle</worksheetName>
+                  </value>
+                </argument>
+                <argument id="targetDescription">
+                  <value class="value" valueClass="string">templates/CloneTestCyclesTestData.xlsx</value>
+                </argument>
+                <argument id="updateValueRange"/>
+                <argument id="updateColumnNames">
+                  <value class="value" valueClass="string">FirstRowOfRange</value>
+                </argument>
+                <argument id="updateMatchType">
+                  <value class="value" valueClass="string">Where</value>
+                </argument>
+                <argument id="updateMatchLocator">
+                  <value class="eq">
+                    <lhs class="variable">
+                      <path element="ProjectCode"/>
+                    </lhs>
+                    <rhs class="value" valueClass="string">PROT</rhs>
+                  </value>
+                </argument>
+              </arguments>
+              <generatedParameters>
+                <apiParam group="result" name="updateValueRange" title="Values Range">
+                  <summary>The range of cells that needs to updated. If nothing is specified entire sheet is targeted</summary>
+                  <type>
+                    <textType>
+                      <constraints>
+                        <valueConstraint name="disableTemplateEditor">true</valueConstraint>
+                      </constraints>
+                    </textType>
+                  </type>
+                </apiParam>
+                <apiParam group="result" name="updateColumnNames" title="Column Names">
+                  <summary>Identifies where the column names are in the spreadsheet:</summary>
+                  <defaultValue>FirstRowOfRange</defaultValue>
+                  <type>
+                    <choiceType>
+                      <constraints>
+                        <valueConstraint name="boundedValues">FirstRowOfRange:Across the first row|FirstColumnOfRange:Down the first column</valueConstraint>
+                      </constraints>
+                    </choiceType>
+                  </type>
+                </apiParam>
+                <apiParam group="result" internal="true" name="updateMatchType" title="">
+                  <summary/>
+                  <defaultValue>RowOrColNumber</defaultValue>
+                  <type>
+                    <choiceType>
+                      <constraints>
+                        <valueConstraint name="boundedValues">RowOrColNumber:Match by Position|Where:Match on Condition|MatchColumns:Match by Columns</valueConstraint>
+                      </constraints>
+                    </choiceType>
+                  </type>
+                </apiParam>
+                <apiParam group="result" manuallyResolved="true" name="updateMatchLocator" title="Match Locator">
+                  <summary>Identifies which rows in the Range will be updated. \n It can either be a row number (where the first row = 1) or a filtering condition against one or more columns (e.g. {firstName = "Joe" and surname = "Bloggs"}.</summary>
+                </apiParam>
+              </generatedParameters>
+            </apiCall>
+          </steps>
+        </clause>
+      </clauses>
+    </apiCall>
+    <apiCall apiId="com.provar.plugins.bundled.apis.If" name="If" testItemId="22" title="If: {ExcelData.VersionName !~ &quot;.*Smoke&quot;}">
+      <arguments>
+        <argument id="condition">
+          <value class="nomatch">
+            <lhs class="variable">
+              <path element="ExcelData"/>
+              <path element="VersionName"/>
+            </lhs>
+            <rhs class="value" valueClass="string">.*Smoke</rhs>
+          </value>
+        </argument>
+      </arguments>
+      <clauses>
+        <clause name="then" testItemId="23">
+          <steps>
+            <apiCall apiId="com.provar.plugins.bundled.apis.If" name="If" testItemId="27" title="If: {ExcelData.VersionName !~ &quot;.*Detail&quot;}">
+              <arguments>
+                <argument id="condition">
+                  <value class="nomatch">
+                    <lhs class="variable">
+                      <path element="ExcelData"/>
+                      <path element="VersionName"/>
+                    </lhs>
+                    <rhs class="value" valueClass="string">.*Detail</rhs>
+                  </value>
+                </argument>
+              </arguments>
+              <clauses>
+                <clause name="then" testItemId="28">
+                  <steps>
+                    <apiCall apiId="com.provar.plugins.bundled.apis.control.SetValues" name="SetValues" testItemId="24" title="Set Values: tt">
+                      <arguments>
+                        <argument id="values">
+                          <value class="valueList" mutable="Mutable">
+                            <namedValues mutable="Mutable">
+                              <namedValue name="valuePath">
+                                <value class="value" valueClass="string">tt</value>
+                              </namedValue>
+                              <namedValue name="value">
+                                <value class="variable">
+                                  <path element="ExcelData"/>
+                                  <path element="VersionName"/>
+                                </value>
+                              </namedValue>
+                              <namedValue name="valueScope">
+                                <value class="value" valueClass="string">Test</value>
+                              </namedValue>
+                            </namedValues>
+                          </value>
+                        </argument>
+                      </arguments>
+                    </apiCall>
+                    <apiCall apiId="com.provar.plugins.bundled.apis.io.Write" name="Write" testItemId="25" title="Write: {v}=&gt;templates/CloneTestCyclesTestData.xlsx">
+                      <arguments>
+                        <argument id="data">
+                          <value class="variable">
+                            <path element="v"/>
+                          </value>
+                        </argument>
+                        <argument id="dataUrl">
+                          <value class="excelTarget" debug="true" sheetWriteMode="Update">
+                            <workbookPath class="value" valueClass="string">templates/CloneTestCyclesTestData.xlsx</workbookPath>
+                            <worksheetName class="value" valueClass="string">CloneCycle</worksheetName>
+                          </value>
+                        </argument>
+                        <argument id="targetDescription">
+                          <value class="value" valueClass="string">templates/CloneTestCyclesTestData.xlsx</value>
+                        </argument>
+                        <argument id="updateValueRange"/>
+                        <argument id="updateColumnNames">
+                          <value class="value" valueClass="string">FirstRowOfRange</value>
+                        </argument>
+                        <argument id="updateMatchType">
+                          <value class="value" valueClass="string">Where</value>
+                        </argument>
+                        <argument id="updateMatchLocator">
+                          <value class="eq">
+                            <lhs class="variable">
+                              <path element="ProjectCode"/>
+                            </lhs>
+                            <rhs class="value" valueClass="string">PROT</rhs>
+                          </value>
+                        </argument>
+                      </arguments>
+                      <generatedParameters>
+                        <apiParam group="result" name="updateValueRange" title="Values Range">
+                          <summary>The range of cells that needs to updated. If nothing is specified entire sheet is targeted</summary>
+                          <type>
+                            <textType>
+                              <constraints>
+                                <valueConstraint name="disableTemplateEditor">true</valueConstraint>
+                              </constraints>
+                            </textType>
+                          </type>
+                        </apiParam>
+                        <apiParam group="result" name="updateColumnNames" title="Column Names">
+                          <summary>Identifies where the column names are in the spreadsheet:</summary>
+                          <defaultValue>FirstRowOfRange</defaultValue>
+                          <type>
+                            <choiceType>
+                              <constraints>
+                                <valueConstraint name="boundedValues">FirstRowOfRange:Across the first row|FirstColumnOfRange:Down the first column</valueConstraint>
+                              </constraints>
+                            </choiceType>
+                          </type>
+                        </apiParam>
+                        <apiParam group="result" internal="true" name="updateMatchType" title="">
+                          <summary/>
+                          <defaultValue>RowOrColNumber</defaultValue>
+                          <type>
+                            <choiceType>
+                              <constraints>
+                                <valueConstraint name="boundedValues">RowOrColNumber:Match by Position|Where:Match on Condition|MatchColumns:Match by Columns</valueConstraint>
+                              </constraints>
+                            </choiceType>
+                          </type>
+                        </apiParam>
+                        <apiParam group="result" manuallyResolved="true" name="updateMatchLocator" title="Match Locator">
+                          <summary>Identifies which rows in the Range will be updated. \n It can either be a row number (where the first row = 1) or a filtering condition against one or more columns (e.g. {firstName = "Joe" and surname = "Bloggs"}.</summary>
+                        </apiParam>
+                      </generatedParameters>
+                    </apiCall>
+                    <apiCall apiId="com.provar.plugins.bundled.apis.io.Write" name="Write" testItemId="26" title="Write: {v}=&gt;templates/CloneTestCyclesTestData.xlsx">
+                      <arguments>
+                        <argument id="data">
+                          <value class="variable">
+                            <path element="v"/>
+                          </value>
+                        </argument>
+                        <argument id="dataUrl">
+                          <value class="excelTarget" debug="true" sheetWriteMode="Update">
+                            <workbookPath class="value" valueClass="string">templates/CloneTestCyclesTestData.xlsx</workbookPath>
+                            <worksheetName class="value" valueClass="string">DetailClone</worksheetName>
+                          </value>
+                        </argument>
+                        <argument id="targetDescription">
+                          <value class="value" valueClass="string">templates/CloneTestCyclesTestData.xlsx</value>
+                        </argument>
+                        <argument id="updateValueRange"/>
+                        <argument id="updateColumnNames">
+                          <value class="value" valueClass="string">FirstRowOfRange</value>
+                        </argument>
+                        <argument id="updateMatchType">
+                          <value class="value" valueClass="string">Where</value>
+                        </argument>
+                        <argument id="updateMatchLocator">
+                          <value class="eq">
+                            <lhs class="variable">
+                              <path element="ProjectCode"/>
+                            </lhs>
+                            <rhs class="value" valueClass="string">PROT</rhs>
+                          </value>
+                        </argument>
+                      </arguments>
+                      <generatedParameters>
+                        <apiParam group="result" name="updateValueRange" title="Values Range">
+                          <summary>The range of cells that needs to updated. If nothing is specified entire sheet is targeted</summary>
+                          <type>
+                            <textType>
+                              <constraints>
+                                <valueConstraint name="disableTemplateEditor">true</valueConstraint>
+                              </constraints>
+                            </textType>
+                          </type>
+                        </apiParam>
+                        <apiParam group="result" name="updateColumnNames" title="Column Names">
+                          <summary>Identifies where the column names are in the spreadsheet:</summary>
+                          <defaultValue>FirstRowOfRange</defaultValue>
+                          <type>
+                            <choiceType>
+                              <constraints>
+                                <valueConstraint name="boundedValues">FirstRowOfRange:Across the first row|FirstColumnOfRange:Down the first column</valueConstraint>
+                              </constraints>
+                            </choiceType>
+                          </type>
+                        </apiParam>
+                        <apiParam group="result" internal="true" name="updateMatchType" title="">
+                          <summary/>
+                          <defaultValue>RowOrColNumber</defaultValue>
+                          <type>
+                            <choiceType>
+                              <constraints>
+                                <valueConstraint name="boundedValues">RowOrColNumber:Match by Position|Where:Match on Condition|MatchColumns:Match by Columns</valueConstraint>
+                              </constraints>
+                            </choiceType>
+                          </type>
+                        </apiParam>
+                        <apiParam group="result" manuallyResolved="true" name="updateMatchLocator" title="Match Locator">
+                          <summary>Identifies which rows in the Range will be updated. \n It can either be a row number (where the first row = 1) or a filtering condition against one or more columns (e.g. {firstName = "Joe" and surname = "Bloggs"}.</summary>
+                        </apiParam>
+                      </generatedParameters>
+                    </apiCall>
+                  </steps>
+                </clause>
+              </clauses>
+            </apiCall>
+          </steps>
+        </clause>
+      </clauses>
+    </apiCall>
+  </steps>
+  <params>
+    <param name="Version" title="Version">
+      <summary/>
+      <type>
+        <textType>
+          <constraints>
+            <valueConstraint name="minLength">0</valueConstraint>
+            <valueConstraint name="maxLength">9999</valueConstraint>
+            <valueConstraint name="regex"/>
+          </constraints>
+        </textType>
+      </type>
+    </param>
+    <param name="VersionDescription" title="Version Description">
+      <summary/>
+      <type>
+        <textType>
+          <constraints>
+            <valueConstraint name="minLength">0</valueConstraint>
+            <valueConstraint name="maxLength">9999</valueConstraint>
+            <valueConstraint name="regex"/>
+          </constraints>
+        </textType>
+      </type>
+    </param>
+    <param name="ProjectCode" title="Project Code">
+      <summary/>
+      <type>
+        <textType>
+          <constraints>
+            <valueConstraint name="minLength">0</valueConstraint>
+            <valueConstraint name="maxLength">9999</valueConstraint>
+            <valueConstraint name="regex"/>
+          </constraints>
+        </textType>
+      </type>
+    </param>
+  </params>
+  <args>
+    <argument id="Version">
+      <value class="value" valueClass="string">Base Version 5</value>
+    </argument>
+    <argument id="VersionDescription">
+      <value class="value" valueClass="string">It contains all the required TestCycles</value>
+    </argument>
+    <argument id="ProjectCode">
+      <value class="value" valueClass="string">PROT</value>
+    </argument>
+  </args>
+</testCase>

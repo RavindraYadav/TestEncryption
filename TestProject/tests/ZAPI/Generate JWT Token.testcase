@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<testCase failureBehaviour="Inherit" registryId="d1ee6bd1-c8ca-4877-8f5b-c3387ca0f719" visibility="Internal">
+  <summary/>
+  <steps>
+    <apiCall apiId="customapis.JWTGenerator" name="JWTGenerator" testItemId="1" title="JWTGenerator: ⇒ tes">
+      <tags/>
+      <arguments>
+        <argument id="param1">
+          <value class="value" valueClass="string">t</value>
+        </argument>
+        <argument id="param2">
+          <value class="value" valueClass="boolean">true</value>
+        </argument>
+        <argument id="resultName">
+          <value class="value" valueClass="string">tes</value>
+        </argument>
+        <argument id="resultScope">
+          <value class="value" valueClass="string">Test</value>
+        </argument>
+        <argument argId="cd91cd64-f6c6-4df0-8e01-9f613801aba4" id="AccessKey">
+          <value class="variable">
+            <path element="AccessKey"/>
+          </value>
+        </argument>
+        <argument argId="88970c1f-42c9-4208-901b-f38756fe6203" id="SecretKey">
+          <value class="variable">
+            <path element="SecretKey"/>
+          </value>
+        </argument>
+        <argument argId="b0308c6b-c854-4980-84e7-0e9220e71dcd" id="UserName">
+          <value class="variable">
+            <path element="UserName"/>
+          </value>
+        </argument>
+        <argument argId="a64b59fd-ced0-4292-8d97-5f7e0ef6676e" id="jwtToken">
+          <value class="value" valueClass="string">Token</value>
+        </argument>
+        <argument argId="e623527d-0812-435c-b91a-528dbe06c22e" id="ResourceURL">
+          <value class="variable">
+            <path element="ResourceURL"/>
+          </value>
+        </argument>
+        <argument argId="24cd713f-c654-48df-9118-a40155fcac72" id="Method">
+          <value class="variable">
+            <path element="Method"/>
+          </value>
+        </argument>
+      </arguments>
+    </apiCall>
+    <apiCall apiId="com.provar.plugins.bundled.apis.control.SetValues" name="SetValues" testItemId="2" title="Set Values: Token">
+      <arguments>
+        <argument id="values">
+          <value class="valueList" mutable="Mutable">
+            <namedValues mutable="Mutable">
+              <namedValue name="valuePath">
+                <value class="value" valueClass="string">Token</value>
+              </namedValue>
+              <namedValue name="value">
+                <value class="variable">
+                  <path element="Token"/>
+                </value>
+              </namedValue>
+              <namedValue name="valueScope">
+                <value class="value" valueClass="string">Test</value>
+              </namedValue>
+            </namedValues>
+          </value>
+        </argument>
+      </arguments>
+    </apiCall>
+  </steps>
+  <params>
+    <param linkedToUrl="provar:hasvalue:cd91cd64-f6c6-4df0-8e01-9f613801aba4" name="AccessKey" title="Access Key">
+      <summary>Access Key from ZAPI</summary>
+      <type>
+        <textType/>
+      </type>
+    </param>
+    <param linkedToUrl="provar:hasvalue:88970c1f-42c9-4208-901b-f38756fe6203" name="SecretKey" title="Secret Key">
+      <summary>Secret Key from ZAPI</summary>
+      <type>
+        <textType/>
+      </type>
+    </param>
+    <param linkedToUrl="provar:hasvalue:b0308c6b-c854-4980-84e7-0e9220e71dcd" name="UserName" title="User Name">
+      <summary>User Name of Jira/Zapi instance</summary>
+      <type>
+        <textType/>
+      </type>
+    </param>
+    <param linkedToUrl="provar:hasvalue:e623527d-0812-435c-b91a-528dbe06c22e" name="ResourceURL" title="Resource URL">
+      <summary>End point</summary>
+      <type>
+        <textType/>
+      </type>
+    </param>
+    <param linkedToUrl="provar:hasvalue:24cd713f-c654-48df-9118-a40155fcac72" name="Method" title="Method">
+      <summary>Method</summary>
+      <type>
+        <textType/>
+      </type>
+    </param>
+  </params>
+  <outputParams>
+    <param name="Token" title="Token">
+      <summary>The name of the value to be set.  May contain sub-values, e.g. 'Value1.SubValue1'.</summary>
+      <type>
+        <textType>
+          <constraints>
+            <valueConstraint name="minLength">0</valueConstraint>
+            <valueConstraint name="maxLength">9999</valueConstraint>
+            <valueConstraint name="regex"/>
+          </constraints>
+        </textType>
+      </type>
+      <sourceValue class="variable">
+        <path element="Token"/>
+      </sourceValue>
+    </param>
+  </outputParams>
+  <args>
+    <argument id="AccessKey">
+      <value class="value" valueClass="string">ZmQyYWZhNWUtYmE5NC0zNDYyLTliM2QtMDMxMTgxNWY5NWY5IGFkbWluIGFkbWlu</value>
+    </argument>
+    <argument id="SecretKey">
+      <value class="value" valueClass="string">Ei02EWRti72C08z7LP2lOGnwAPtYao8mYMzaMJpTiaU</value>
+    </argument>
+    <argument id="UserName">
+      <value class="value" valueClass="string">admin</value>
+    </argument>
+    <argument id="ResourceURL">
+      <value class="value" valueClass="string">/public/rest/api/1.0/cycle</value>
+    </argument>
+    <argument id="Method">
+      <value class="value" valueClass="string">GET</value>
+    </argument>
+  </args>
+  <outputArgs>
+    <outputArgument id="Token">
+      <name class="value" valueClass="string">Token</name>
+    </outputArgument>
+  </outputArgs>
+</testCase>

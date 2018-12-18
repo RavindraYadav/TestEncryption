@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="TestProject/tests" tests="1" failures="0" skipped="0" hostname="Ravindras-MBP-2" time="7.63" timestamp="Thu Nov 22 23:24:25 IST 2018">
+	<properties>
+		<property name="excludeCallableTestCases" value="false"/>
+		<property name="testEnvironment" value=""/>
+		<property name="pluginOutputLevel" value="WARNING"/>
+		<property name="projectPath" value=".."/>
+		<property name="salesforceMetadataCache" value="Reuse"/>
+		<property name="resultsPathDisposition" value="Increment"/>
+		<property name="testOutputLevel" value="WARNING"/>
+		<property name="webBrowserType" value="Google Chrome"/>
+		<property name="resultsPath" value="../ANT/Results"/>
+		<property name="webBrowserConfiguration" value="Full Screen"/>
+		<property name="projectCachePath" value="/Users/ravindrayadav/Documents/WorkSpaces/ZAPIOnly/TestProject/ANT/../../.provarCaches"/>
+	</properties>
+	<testcase classname="tests/ZAPI/CreateProjectVersion.testcase" name="CreateProjectVersion.testcase" time="7.628">
+	</testcase>
+</testsuite>
